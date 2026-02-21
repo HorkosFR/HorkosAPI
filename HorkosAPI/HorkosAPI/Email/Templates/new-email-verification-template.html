@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #ffffff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .header {
+            background-color: #F5EFE6;
+            padding: 30px;
+            text-align: center;
+            color: #1E293B;
+        }
+
+        .content {
+            padding: 30px;
+            line-height: 1.6;
+            color: #333333;
+        }
+
+        .button-container {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .button {
+            background-color: #F5EFE6;
+            color: #1E293B !important;
+            padding: 15px 25px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            display: inline-block;
+        }
+
+        .footer {
+            background-color: #f9f9f9;
+            padding: 20px;
+            text-align: center;
+            font-size: 12px;
+            color: #777777;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Modification du profil</h1>
+        </div>
+        <div class="content">
+            <p>Bonjour {{Username}},</p>
+            <p>Vous avez fait un demande de modification d'e-mail. Pour valider le changement de l'adresse e-mail de votre compte, merci de la valider en cliquant sur le bouton ci-dessous :</p>
+
+            <div class="button-container">
+                <a href="{{VerificationUrl}}" class="button">Confirmer mon e-mail</a>
+            </div>
+
+            <p>Ce lien est valide pendant 2 heures. Si vous n'avez pas fait la demande de changement d'e-mail, vous pouvez ignorer cet email en toute sécurité.</p>
+            <p>A très vite,<br>L'équipe Horkos</p>
+        </div>
+        <div class="footer">
+            &copy; 2026 Horkos. Tous droits r�serv�s.
+        </div>
+    </div>
+</body>
+</html>
