@@ -1,0 +1,16 @@
+FROM mcr.microsoft.com/dotnet/sdk:8.0
+
+WORKDIR /app
+
+COPY HorkosAPI/HorkosAPI.sln ./HorkosAPI/
+COPY HorkosAPI/HorkosAPI/HorkosAPI.csproj ./HorkosAPI/HorkosAPI/
+
+RUN dotnet restore HorkosAPI/HorkosAPI.sln
+
+COPY . .
+
+WORKDIR /app/HorkosAPI/HorkosAPI
+
+EXPOSE 5198
+
+ENTRYPOINT ["dotnet", "watch", "run", "--urls", "http://0.0.0.0:5198"]
