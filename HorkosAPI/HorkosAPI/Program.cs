@@ -95,6 +95,13 @@ builder.Services
 
 var app = builder.Build();
 
+if (app.Environment.IsDevelopment())
+{
+    using var scope = app.Services.CreateScope();
+    var db = scope.ServiceProvider.GetRequiredService<DatabaseContext>();
+    db.Database.EnsureCreated();
+}
+
 Environment.SetEnvironmentVariable("IS_PRODUCTION", app.Environment.IsProduction().ToString() ?? "false");
 app.UseCors(AppOrigin);
 
