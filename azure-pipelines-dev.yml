@@ -7,7 +7,7 @@ variables:
   azureSubscription: "Azure Dev (eb9ca34c-212d-4020-98f1-d7f3430ae2ce)"
   resourceGroup: "PISTIS-DEV"
   appServiceName: "PISTIS-DEV-AS"
-  projectPath: "PistisBack/PistisBack/PistisBack.csproj"
+  projectPath: "HorkosAPI/HorkosAPI/HorkosAPI.csproj"
   buildConfiguration: "Release"
 
 pool:
