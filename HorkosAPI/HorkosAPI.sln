@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36511.14 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HorkosAPI", "HorkosAPI\HorkosAPI.csproj", "{471178F3-05E8-4167-9ADE-75DB72B3BB3D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{471178F3-05E8-4167-9ADE-75DB72B3BB3D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{471178F3-05E8-4167-9ADE-75DB72B3BB3D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{471178F3-05E8-4167-9ADE-75DB72B3BB3D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{471178F3-05E8-4167-9ADE-75DB72B3BB3D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D672EC19-0CEC-4F95-A3B8-DDCA551E48B1}
+	EndGlobalSection
+EndGlobal
