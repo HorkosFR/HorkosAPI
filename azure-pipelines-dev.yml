@@ -3,6 +3,8 @@ trigger:
     include:
       - Dev
 
+pr: none
+
 variables:
   azureSubscription: "Azure Dev (eb9ca34c-212d-4020-98f1-d7f3430ae2ce)"
   resourceGroup: "PISTIS-DEV"
