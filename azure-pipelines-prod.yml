@@ -1,0 +1,73 @@
+trigger:
+  branches:
+    include:
+      - main
+
+variables:
+  azureSubscription: "Azure Prod (eb9ca34c-212d-4020-98f1-d7f3430ae2ce)"
+  resourceGroup: "HORKOS-PROD"
+  appServiceName: "HORKOS-PROD-AS"
+  projectPath: "PistisBack/PistisBack/PistisBack.csproj"
+  buildConfiguration: "Release"
+
+pool:
+  vmImage: "windows-latest"
+
+stages:
+  - stage: Build
+    displayName: "Build .NET 8 Project"
+    jobs:
+      - job: Build
+        steps:
+          - task: UseDotNet@2
+            displayName: "Installer .NET 8 SDK"
+            inputs:
+              packageType: "sdk"
+              version: "8.x"
+              installationPath: $(Agent.ToolsDirectory)/dotnet
+
+          - script: dotnet restore $(projectPath)
+            displayName: "Restore NuGet packages"
+
+          - script: dotnet build $(projectPath) --configuration $(buildConfiguration) --no-restore
+            displayName: "Build project"
+
+          - script: dotnet publish $(projectPath) --configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)/publish --no-build
+            displayName: "Publish project"
+
+          - task: PublishBuildArtifacts@1
+            inputs:
+              pathToPublish: "$(Build.ArtifactStagingDirectory)/publish"
+              artifactName: "drop"
+              publishLocation: "Container"
+
+  - stage: Deploy
+    displayName: "Deploy to Azure App Service"
+    dependsOn: Build
+    jobs:
+      - deployment: DeployWebApp
+        environment: "production"
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - download: current
+                  artifact: drop
+
+                - task: AzureWebApp@1
+                  displayName: "Deploy to Azure App Service"
+                  inputs:
+                    azureSubscription: "$(azureSubscription)"
+                    appName: "$(appServiceName)"
+                    package: "$(Pipeline.Workspace)/drop"
+                - task: AzureCLI@2
+                  displayName: "Set App Settings (DatabaseConnectionString)"
+                  inputs:
+                    azureSubscription: "$(azureSubscription)"
+                    scriptType: "bash"
+                    scriptLocation: "inlineScript"
+                    inlineScript: |
+                      az webapp config appsettings set \
+                        --name $(appServiceName) \
+                        --resource-group $(resourceGroup) \
+                        --settings Application__DatabaseConnectionString="$(databaseConnectionString)"
