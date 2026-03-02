@@ -15,9 +15,9 @@ public static class UserTokenController
         return app;
     }
 
-    public static async Task<IResult> RenewUserTokenAsync([FromHeader(Name = "authorization")] string refreshUserToken, [FromServices] IUserTokenService _userTokenService)
+    public static async Task<IResult> RenewUserTokenAsync([FromHeader(Name = "authorization")] string accessUserToken, [FromServices] IUserTokenService _userTokenService)
         => await BaseController.ExecuteTryCatchAsync(
-            async () => { return Results.Ok(await _userTokenService.CheckRefreshToken(refreshUserToken)); }
+            async () => { return Results.Ok(await _userTokenService.CheckAccessToken(accessUserToken, true)); }
         );
 
     public static async Task<IResult> CheckRefreshUserTokenAsync([FromHeader(Name = "authorization")] string refreshUserToken, [FromServices] IUserTokenService _userTokenService)
@@ -27,6 +27,6 @@ public static class UserTokenController
 
     public static async Task<IResult> CheckAccessUserTokenAsync([FromHeader(Name = "authorization")] string accessUserToken, [FromServices] IUserTokenService _userTokenService)
         => await BaseController.ExecuteTryCatchAsync(
-            async () => { return Results.Ok(await _userTokenService.CheckAccessToken(accessUserToken)); }
+            async () => { return Results.Ok(await _userTokenService.CheckAccessToken(accessUserToken, false)); }
         );
 }
