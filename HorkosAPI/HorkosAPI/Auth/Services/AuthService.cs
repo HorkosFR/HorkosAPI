@@ -85,7 +85,6 @@ public class AuthService(DatabaseContext _databaseContext, IUserTokenService use
         var stringPassword2 = Convert.FromBase64String(user.Password ?? "");
         if (!Crypto.VerifyHashedPassword(user.Password, BitConverter.ToString(stringPassword)))
         {
-            var stringPass = BitConverter.ToString(stringPassword);
             throw new Exception(LoginResponse.WrongPassword.ToString());
         }
 

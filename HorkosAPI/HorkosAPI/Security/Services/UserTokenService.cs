@@ -60,7 +60,7 @@ public class UserTokenService(IConfiguration configuration, DatabaseContext data
     }
 
 
-    public async Task<string> CheckAccessToken(string userToken)
+    public async Task<string> CheckAccessToken(string userToken, bool checkOld = false)
     {
         userToken = userToken.Replace("Bearer ", null);
         JwtSecurityTokenHandler tokenHandler = new();
@@ -80,7 +80,7 @@ public class UserTokenService(IConfiguration configuration, DatabaseContext data
 
         TokenValidationParameters tokenValidationParameters = new()
         {
-            ValidateLifetime = true,
+            ValidateLifetime = !checkOld,
             ValidateAudience = true,
             ValidateIssuer = true,
             ValidIssuer = "appOrigin",
@@ -93,7 +93,8 @@ public class UserTokenService(IConfiguration configuration, DatabaseContext data
         {
             tokenHandler.ValidateToken(userToken, tokenValidationParameters, out SecurityToken validatedToken);
 
-            return userToken;
+            if (checkOld) return GenerateJwtToken(user, DateTime.UtcNow.AddHours(2), "Access");
+            else return null;
         }
         catch (SecurityTokenExpiredException)
         {
