@@ -73,6 +73,10 @@ namespace HorkosAPI.Source.Controllers
         private static async Task<IResult> UpdateSourceAsync(HttpContext context, [FromServices] IUserContributionService contribution, [FromServices] ISourceService service, Guid id, [FromBody] SourceDTO dto)
         {
             context.Items.TryGetValueTyped("CurrentUser", out Database.Models.User currentUser).EnsureTrue(UserResponse.UserDoesNotExist.ToString());
+            if (currentUser.Role == null || currentUser.Role.Name == null || !currentUser.Role.Name.Equals("Administrator"))
+            {
+                return Results.Problem(UserResponse.UnknownRole.ToString(), null, 500);
+            }
             var success = await service.UpdateSourceAsync(id, dto, currentUser.Id);
             if (success)
             {
