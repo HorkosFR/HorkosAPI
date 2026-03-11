@@ -121,6 +121,10 @@ namespace HorkosAPI.Fact.Controllers
             try
             {
                 context.Items.TryGetValueTyped("CurrentUser", out Database.Models.User currentUser).EnsureTrue(UserResponse.UserDoesNotExist.ToString());
+                if (currentUser.Role == null || currentUser.Role.Name == null || !currentUser.Role.Name.Equals("Administrator"))
+                {
+                    return Results.Problem(UserResponse.UnknownRole.ToString(), null, 500);
+                }
                 var success = await service.UpdateFactAsync(id, updatedFact, currentUser.Id);
                 if (success)
                 {

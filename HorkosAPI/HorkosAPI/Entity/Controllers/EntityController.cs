@@ -75,6 +75,10 @@ namespace HorkosAPI.Entity.Controllers
             try
             {
                 context.Items.TryGetValueTyped("CurrentUser", out Database.Models.User currentUser).EnsureTrue(UserResponse.UserDoesNotExist.ToString());
+                if (currentUser.Role == null || currentUser.Role.Name == null || !currentUser.Role.Name.Equals("Administrator"))
+                {
+                    return Results.Problem(UserResponse.UnknownRole.ToString(), null, 500);
+                }
                 var success = await _entityService.UpdateEntityAsync(id, entity, currentUser.Id);
                 if (success)
                 {
