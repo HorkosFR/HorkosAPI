@@ -2,6 +2,10 @@
 
 The core API and backend services for the Horkos platform. Horkos is a citizen-led initiative dedicated to centralizing, archiving, and tracking public political data and transparency metrics.
 
+Visit the website at https://horkos.fr
+
+Join us on Discord at https://discord.gg/uYc3u99hpX
+
 ## Getting Started
 
 1. Copy env file:
